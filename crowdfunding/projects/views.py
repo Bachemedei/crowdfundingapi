@@ -155,7 +155,6 @@ class SheltersProjects(generics.ListAPIView):
         sheltername = self.kwargs['slug']
         shelter = Shelter.objects.get(name=sheltername)
         user = shelter.owner
-        # breakpoint()
         return Project.objects.filter(owner=user)
 
 class RecommendedProjects(generics.ListAPIView):
@@ -201,12 +200,9 @@ class PledgeList(APIView):
 
 class PetCategory(APIView):
     # Create pet category, return list of all categories
+    
     permission_classes = [IsGetOrIsAdmin]
 
-    # permission_classes_by_action = {
-    #     'create': [permissions.IsAdminUser],
-    #     'list': [permissions.AllowAny]
-    # }
     def post(self, request):
         serializer = PetsSerializer(data=request.data)
         if serializer.is_valid():
