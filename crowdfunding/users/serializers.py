@@ -6,8 +6,8 @@ from projects.models import PetTag
 
 class UserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
+    preferredname = serializers.CharField(max_length=200, source='profile.preferredname')
     bio = serializers.CharField(max_length=200, source='profile.bio')
     petlikes = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all(), source='profile.petlikes')
     is_supporter = serializers.BooleanField(read_only=True)
@@ -34,10 +34,10 @@ class UserSerializer(serializers.Serializer):
     def update(self, user, validated_data):
         print(user)
         print(validated_data)
-        user.username = validated_data.get('username', user.username)
         user.email = validated_data.get('email', user.email)
         profile_data = validated_data.get('profile')
         if profile_data:
+            user.profile.preferredname = profile_data.get('preferredname', user.profile.preferredname)
             user.profile.bio = profile_data.get('bio', user.profile.bio)
             user.profile.petlikes.set(profile_data.get('petlikes', user.profile.petlikes))
         user.save()

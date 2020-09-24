@@ -7,7 +7,7 @@ class ShelterSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=500)
     address = serializers.CharField(max_length=200)
     charityregister = serializers.IntegerField()
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.email')
     def create(self, validated_data):
         return Shelter.objects.create(**validated_data)
 
@@ -28,7 +28,7 @@ class PledgeSerializer(serializers.Serializer):
     amount = serializers.IntegerField()
     comment = serializers.CharField(max_length=200)
     anonymous = serializers.BooleanField()
-    supporter = serializers.ReadOnlyField(source='supporter.username')
+    supporter = serializers.ReadOnlyField(source='supporter.email')
     project_id = serializers.IntegerField()
     def create(self, validated_data):
         return Pledge.objects.create(**validated_data)
@@ -42,7 +42,7 @@ class ProjectSerializer(serializers.Serializer):
     image = serializers.URLField()
     is_open = serializers.BooleanField()
     date_created = serializers.DateTimeField()
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.email')
     shelter = serializers.ReadOnlyField(source='owner.shelter.name')
     is_approved = serializers.ReadOnlyField(source='owner.shelter.is_approved')
     species = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all())
