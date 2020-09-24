@@ -46,6 +46,7 @@ class ProjectSerializer(serializers.Serializer):
     shelter = serializers.ReadOnlyField(source='owner.shelter.name')
     is_approved = serializers.ReadOnlyField(source='owner.shelter.is_approved')
     species = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all())
+    pledges = PledgeSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         species = validated_data.pop('species')
