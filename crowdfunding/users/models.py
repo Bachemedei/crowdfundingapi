@@ -69,6 +69,7 @@ class Profile(models.Model):
     )
     preferredname = models.CharField(max_length=200)
     bio = models.TextField(blank=True)
+    profile_pic = models.URLField(max_length=200)
     petlikes = models.ManyToManyField(
         "projects.PetTag",
         related_name = "liked_by",

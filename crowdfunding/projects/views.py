@@ -194,6 +194,15 @@ class PledgeList(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class UsersPledges(generics.ListAPIView):
+    # Get list of pledges that the current user has made
+    serializer_class = PledgeSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        user = CustomUser.objects.get(pk=pk)
+        return Pledge.objects.filter(supporter=user)
+    
 
 
 # Pet Categories
