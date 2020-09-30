@@ -16,7 +16,7 @@ class UserList(APIView):
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        print(request.data)
+        print("view", request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
