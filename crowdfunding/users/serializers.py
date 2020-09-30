@@ -18,11 +18,11 @@ class UserSerializer(serializers.Serializer):
     def create(self, validated_data):
         print("serializer", validated_data)
         # password = validated_data.pop('password')
-        print(password)
+        # print(password)
         profile_data = validated_data.pop('profile')
         pet_likes = profile_data.pop('petlikes')
-        new_user = CustomUser.objects.create(**validated_data)
-        new_user.set_password(password)
+        new_user = CustomUser.objects.create_user(**validated_data)
+        # new_user.set_password(password)
 
         # update user profile data
         Profile.objects.filter(user=new_user).update(**profile_data)
