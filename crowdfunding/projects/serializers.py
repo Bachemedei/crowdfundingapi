@@ -7,9 +7,14 @@ class ShelterSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=500)
     address = serializers.CharField(max_length=200)
     charityregister = serializers.IntegerField()
+    species = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all())
     owner = serializers.ReadOnlyField(source='owner.email')
     def create(self, validated_data):
-        return Shelter.objects.create(**validated_data)
+        species = validated_data.pop('species')
+        Shelter.objects.create(**validated_data)
+        Shelter.species.set(species)
+        Shelter.save()
+        return Shelter
 
 class ShelterDetailSerializer(ShelterSerializer):
 
@@ -18,6 +23,7 @@ class ShelterDetailSerializer(ShelterSerializer):
         instance.description = validated_data.get('description', instance.description)
         instance.address = validated_data.get('address', instance.address)
         instance.charityregister = validated_data.get('charityregister', instance.name)
+        instance.species.set(validated_data.get('species', instance.species))
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance

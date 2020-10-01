@@ -3,12 +3,23 @@ from django.db import models
 # from users.models import get_shelter
 
 
+class PetTag(models.Model):
+    petspecies = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.petspecies
+
 class Shelter(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     address = models.CharField(max_length=200)
     charityregister = models.IntegerField()
     is_approved = models.BooleanField(default=False)
+    species = models.ManyToManyField(
+        PetTag,
+        related_name = "shelters",
+        related_query_name = "shelter"
+    )
     owner = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -17,12 +28,6 @@ class Shelter(models.Model):
     
     def __str__(self):
         return self.name
-
-class PetTag(models.Model):
-    petspecies = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.petspecies
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
