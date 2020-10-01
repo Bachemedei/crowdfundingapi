@@ -167,6 +167,14 @@ class RecommendedProjects(generics.ListAPIView):
         liked_list = user.profile.petlikes.all()
         return Project.objects.filter(species__in=liked_list)
 
+class UsersSupportedProjects(generics.ListAPIView):
+    # Get list of projects that the current user has supported
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        user = CustomUser.objects.get(pk=pk)
+        return Project.objects.filter(pledges__supporter=user)
 
 
 # Pledges
