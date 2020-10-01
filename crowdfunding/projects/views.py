@@ -162,8 +162,8 @@ class RecommendedProjects(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        email = self.kwargs['slug']
-        user = CustomUser.objects.get(email=email)
+        user_id = self.kwargs['pk']
+        user = CustomUser.objects.get(pk=user_id)
         liked_list = user.profile.petlikes.all()
         return Project.objects.filter(species__in=liked_list)
 
