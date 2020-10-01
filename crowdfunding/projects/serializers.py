@@ -3,6 +3,7 @@ from .models import Project, Pledge, PetTag, Shelter
 
 
 class ShelterSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
     name = serializers.CharField(max_length=200)
     description = serializers.CharField(max_length=500)
     address = serializers.CharField(max_length=200)
