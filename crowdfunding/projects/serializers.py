@@ -12,10 +12,10 @@ class ShelterSerializer(serializers.Serializer):
     owner = serializers.ReadOnlyField(source='owner.email')
     def create(self, validated_data):
         species = validated_data.pop('species')
-        Shelter.objects.create(**validated_data)
-        Shelter.species.set(species)
-        Shelter.save()
-        return Shelter
+        shelter = Shelter.objects.create(**validated_data)
+        shelter.species.set(species)
+        shelter.save()
+        return shelter
 
 class ShelterDetailSerializer(ShelterSerializer):
 
