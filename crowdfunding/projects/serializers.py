@@ -37,7 +37,7 @@ class PledgeSerializer(serializers.Serializer):
     comment = serializers.CharField(max_length=200)
     anonymous = serializers.BooleanField()
     supporter = serializers.ReadOnlyField(source='supporter.id')
-    # supporter_name = serializers.ReadOnlyField(source='supporter.preferredname')
+    supporter_name = serializers.ReadOnlyField(source='supporter.profile.preferredname')
     project_id = serializers.IntegerField()
     def create(self, validated_data):
         return Pledge.objects.create(**validated_data)
