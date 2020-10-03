@@ -69,6 +69,14 @@ class ShelterDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class UsersShelters(generics.ListAPIView):
+    # Get list of all projects associated with shelter in URL
+    serializer_class = ShelterDetailSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        return Shelter.objects.filter(owner=user_id)
+
 
 # Projects
 
@@ -191,7 +199,10 @@ class PledgeList(APIView):
 
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
+        # user = request.user.profile.preferredname
+        # print(user)
         if serializer.is_valid():
+            # serializer.save(supporter=request.user.profile.preferredname)
             serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
