@@ -69,11 +69,11 @@ class ShelterDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class UsersShelters(generics.ListAPIView):
+class UsersShelters(generics.RetrieveAPIView):
     # Get list of all projects associated with shelter in URL
     serializer_class = ShelterDetailSerializer
 
-    def get_queryset(self):
+    def get_object(self):
         user_id = self.kwargs['pk']
         try:
             return Shelter.objects.get(owner=user_id)
