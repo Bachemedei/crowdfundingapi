@@ -75,7 +75,10 @@ class UsersShelters(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
-        return Shelter.objects.filter(owner=user_id)
+        try:
+            return Shelter.objects.get(owner=user_id)
+        except Shelter.DoesNotExist:
+            raise Http404
 
 
 # Projects
