@@ -69,6 +69,14 @@ class ShelterDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+        def delete(self, request, pk):
+            shelter = self.get_object(pk)
+            shelter.delete()
+            return Response(
+                "Deleted",
+                status = status.HTTP_204_NO_CONTENT
+        )
+
 class UsersShelters(generics.RetrieveAPIView):
     # Get list of all projects associated with shelter in URL
     serializer_class = ShelterDetailSerializer
@@ -151,6 +159,7 @@ class ProjectDetail(APIView):
         project = self.get_object(pk)
         project.delete()
         return Response(
+            "Deleted",
             status = status.HTTP_204_NO_CONTENT
         )
 
