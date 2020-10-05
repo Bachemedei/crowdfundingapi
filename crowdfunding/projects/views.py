@@ -172,8 +172,8 @@ class SheltersProjects(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        sheltername = self.kwargs['slug']
-        shelter = Shelter.objects.get(name=sheltername)
+        shelter_id = self.kwargs['pk']
+        shelter = Shelter.objects.get(pk=shelter_id)
         user = shelter.owner
         return Project.objects.filter(owner=user)
 

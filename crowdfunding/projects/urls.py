@@ -10,7 +10,7 @@ urlpatterns = [
     path('pledges/', views.PledgeList.as_view()),
     path('<int:pk>/pledges/', views.UsersPledges.as_view()),
     path('petcategories/', views.PetCategory.as_view()),
-    path('<str:slug>/projects/', views.SheltersProjects.as_view()),
+    path('<int:pk>/shelter-projects/', views.SheltersProjects.as_view()),
     path('<int:pk>/recommended/', views.RecommendedProjects.as_view()),
     path('<int:pk>/supported-projects/', views.UsersSupportedProjects.as_view()),
     path('<int:pk>/shelter/', views.UsersShelters.as_view())
