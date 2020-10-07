@@ -24,7 +24,7 @@ class ShelterDetailSerializer(ShelterSerializer):
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
         instance.address = validated_data.get('address', instance.address)
-        instance.charityregister = validated_data.get('charityregister', instance.name)
+        instance.charityregister = validated_data.get('charityregister', instance.charityregister)
         instance.species.set(validated_data.get('species', instance.species))
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
