@@ -10,7 +10,7 @@ class ShelterSerializer(serializers.Serializer):
     charityregister = serializers.IntegerField()
     species = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all())
     is_approved = serializers.BooleanField()
-    owner = serializers.ReadOnlyField(source='owner.email')
+    owner_id = serializers.ReadOnlyField(source='owner.id')
     def create(self, validated_data):
         species = validated_data.pop('species')
         shelter = Shelter.objects.create(**validated_data)
@@ -26,7 +26,7 @@ class ShelterDetailSerializer(ShelterSerializer):
         instance.address = validated_data.get('address', instance.address)
         instance.charityregister = validated_data.get('charityregister', instance.charityregister)
         instance.species.set(validated_data.get('species', instance.species))
-        instance.owner = validated_data.get('owner', instance.owner)
+        instance.owner_id = validated_data.get('owner', instance.id)
         instance.save()
         return instance
 
