@@ -54,6 +54,7 @@ class ProjectSerializer(serializers.Serializer):
     owner = serializers.ReadOnlyField(source='owner.email')
     owner_id = serializers.ReadOnlyField(source='owner.id')
     shelter = serializers.ReadOnlyField(source='owner.shelter.name')
+    shelter_id = serializers.ReadOnlyField(source='owner.shelter.id')
     is_approved = serializers.ReadOnlyField(source='owner.shelter.is_approved')
     species = serializers.SlugRelatedField(many=True, slug_field="petspecies", queryset=PetTag.objects.all())
     pledges = PledgeSerializer(many=True, read_only=True)
